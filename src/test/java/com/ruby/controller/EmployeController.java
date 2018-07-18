@@ -1,14 +1,17 @@
 package com.ruby.controller;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+
+import javax.validation.Valid;
+import javax.validation.executable.ValidateOnExecution;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,18 +29,55 @@ EmployeDAOImpl edao;
 public void setEb(EmployeDAOImpl edao) {
 	this.edao = edao;
 }
- 
-
-/*@RequestMapping(value = "/loginEmployee", method = RequestMethod.POST)
-public ModelAndView login(@ModelAttribute EmployeBean eb) {
-
+@RequestMapping(value="/")
+public ModelAndView homepage(@ModelAttribute("eb") EmployeBean eb) {
+	
+	return new ModelAndView("login");
+}
+/*@RequestMapping(value="/loginEmployee",method=RequestMethod.POST)
+public String valid(@Valid @ModelAttribute("eb")EmployeBean eb,BindingResult result) {
 	List<Map<String, Object>> login = edao.login(eb);
-
-	if (login == null || login.isEmpty())
-		return new ModelAndView("fail");
-	else
-		return new ModelAndView("success");
+	
+	while(result.hasErrors())
+	{
+	return "login";
+	}
+ 
+	
+	 if (login == null || login.isEmpty()){
+		return "logfail";
+	 }
+	 
+		return "index";
+	
 }*/
+@RequestMapping( value = "/loginEmployee",method=RequestMethod.POST)
+public ModelAndView login( @ModelAttribute("eb") EmployeBean eb,BindingResult result) {
+	List<Map<String, Object>> login = edao.login(eb);
+	 if (login == null || login.isEmpty()){
+		return new ModelAndView("logfail");
+	 }
+		return new ModelAndView("index");
+}
+@RequestMapping(value="/check" , method=RequestMethod.POST)
+public String check(@Valid @ModelAttribute("eb")EmployeBean eb,BindingResult result) {
+	List<Map<String, Object>> login = edao.id(eb);
+	if (result.hasErrors()) {
+		return "addemp";
+	}
+		else if(!eb.getPassword().equals(eb.getConfirmPass())) {
+			return "passNotMatch";
+		}
+	else if(login == null || login.isEmpty()){
+		edao.insert(eb);
+		return "regisuccess";
+	
+	}
+	
+	 
+	return "regisfail";
+	
+}
 
 
 
@@ -61,8 +101,8 @@ public ModelAndView viewEmpbyId(@PathVariable int id ,ModelAndView model) {
 
 // Handler method for inserting
 
-@RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
-public ModelAndView add(@ModelAttribute EmployeBean eb) {
+@RequestMapping(value = "/saveEmployee",method = RequestMethod.GET)
+public ModelAndView add(@ModelAttribute("eb") EmployeBean eb) {
 
 	edao.insert(eb);
 	return new ModelAndView("redirect:/listEmploye");

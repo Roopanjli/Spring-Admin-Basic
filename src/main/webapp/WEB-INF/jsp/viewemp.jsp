@@ -10,7 +10,7 @@
 </head>
 <body>
 <table border="2" width="70%" cellpadding="2">  
-<tr><th>Index</th><th>Id</th><th>Name</th><th>Salary</th><th>Designation</th><th>Department</th><th>Age</th><th>Edit</th><th>Delete</th></tr>  
+<tr><th>Index</th><th>Id</th><th>Name</th><th>Salary</th><th>Designation</th><th>Department</th><th>Age</th><th>Email ID</th><th>Password</th><th>Edit</th><th>Delete</th></tr>  
    <c:forEach var="emp" items="${list}" varStatus="status">    
    <tr>
    <td>${status.index + 1}</td>  
@@ -20,6 +20,8 @@
    <td>${emp.desig}</td>
    <td>${emp.dept}</td>
    <td>${emp.age}</td> 
+   <td>${emp.email}</td>
+   <td>${emp.password}</td>
    <td><a href="viewEmploye/${emp.id}">Edit</a></td>  
    <td><a href="deleteEmploye/${emp.id}">Delete</a></td>  
    </tr>  

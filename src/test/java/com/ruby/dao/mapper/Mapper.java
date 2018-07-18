@@ -17,7 +17,10 @@ public class Mapper implements RowMapper<EmployeBean> {
 		eb.setDesig(rs.getString(3));
 		eb.setDept(rs.getString(4));
 		eb.setSalary(rs.getDouble(5));
-		eb.setAge(rs.getInt(6));
+		eb.setEmail(rs.getString(6));
+		eb.setAge(rs.getInt(7));
+		eb.setPassword(rs.getString(8));
+		
 		return eb;
 	}
 

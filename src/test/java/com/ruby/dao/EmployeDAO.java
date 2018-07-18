@@ -12,4 +12,6 @@ public int update(EmployeBean eb);
 public List<EmployeBean> findall();
 public int insert(EmployeBean eb);
 public List<Map<String, Object>> login(EmployeBean eb);
+public List<Map<String, Object>> id(EmployeBean eb);
+
 }

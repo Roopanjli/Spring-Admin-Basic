@@ -47,6 +47,16 @@
 <td><form:input path="age"/></td>
 
 </tr>
+<tr>
+<td>Password :</td>
+<td><form:input path="password"/></td>
+
+</tr>
+<tr>
+<td>Email :</td>
+<td><form:input path="email"/></td>
+
+</tr>
 
 <tr>
 <td></td><td><input type="submit" value="Register"></td><td></td>
